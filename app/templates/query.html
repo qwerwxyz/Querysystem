@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% import "pages.html" as pg %}
+{% block title %}Flasky{% endblock %}
+{% block page_content %}
+    <div class="page-header">
+        <h1>你好,
+        {% if current_user.is_authenticated %}
+            {{ current_user.username }}
+        {% else %}
+            Stranger
+        {% endif %}
+        ，你已进入查询系统
+        </h1>
+    </div>
+    <ul class="nav navbar-nav navbar-left" id="test_form" >
+        {{ wtf.quick_form(form) }}
+    </ul>
+    <ul class="nav navbar-nav navbar-right">
+        <table class="table table-bordered">
+            <caption>学生信息表</caption>
+              <thead>
+                <tr>
+                  <th>姓名</th>
+                  <th>学号</th>
+                  <th>性别</th>
+                  <th>班级</th>
+                  <th>专业</th>
+                  <th>出生日期</th>
+                </tr>
+              </thead>
+              <tbody>
+              {%if data%}
+                  {%for stu in data%}
+                    <tr>
+                        <td>{{stu.sname}}</td>
+                        <td>{{stu.sno}}</td>
+                        <td>{{stu.sex}}</td>
+                        <td>{{stu.classno}}</td>
+                        <td>{{stu.dept}}</td>
+                        <td>{{stu.bdate}}</td>
+                    </tr>
+                  {%endfor%}
+              {%endif%}
+              </tbody>
+        </table>
+       {{pg.my_paginate(pagination, 'main.query')}}
+    </ul>
+
+{% endblock %}
